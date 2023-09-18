@@ -24,7 +24,7 @@ public class LoginResponse {
         return data;
     }
 }
-      class UserData {
+class UserData {
     @SerializedName("id")
     private String id;
 

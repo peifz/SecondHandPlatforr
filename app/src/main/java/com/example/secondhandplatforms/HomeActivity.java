@@ -30,6 +30,8 @@ public class HomeActivity extends AppCompatActivity {
                         fragment = new ProductFragment();
                 }else if(item.getItemId() == R.id.navigation_profile){
                       fragment = new MyFragment();
+                }else{
+                    fragment = new ProductFragment();
                 }
                 return loadFragment(fragment);
             }

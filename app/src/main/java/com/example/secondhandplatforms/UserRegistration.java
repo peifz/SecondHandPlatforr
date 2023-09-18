@@ -3,6 +3,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,11 +73,11 @@ public class UserRegistration extends AppCompatActivity {
                         .addHeader("appSecret", "3636148e54bbef9044a5a8647598c1ee004a4")
                         .post(RequestBody.create(JSON, requestBody))
                         .build();
-
                 Response response = client.newCall(request).execute();
 
                 if (response.isSuccessful()) {
                     return response.body().string();
+
                 } else {
                     return "注册失败，HTTP响应码：" + response.code();
                 }

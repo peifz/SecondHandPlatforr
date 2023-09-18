@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public  static  int UserId;
     private Button registraButton;
     private ImageView passwordVisibilityImageView;
-
+    public static String AvatarUrl ;
 
     //注册实现页面的跳转
     private void navigateToRegisterPage() {
@@ -140,15 +140,16 @@ public class MainActivity extends AppCompatActivity {
         try {
             Gson gson = new Gson();
             Log.d("beforeGson",response.toString());
-            UserId = Integer.parseInt(response.toString().substring(39,41));
-            Log.d("id", String.valueOf(UserId));
+            //截取用户id
+
             LoginResponse loginResponse = gson.fromJson(response, LoginResponse.class);
+            AvatarUrl = loginResponse.getData().getAvatar();
+            UserId = Integer.parseInt(loginResponse.getData().getId());
             if (loginResponse != null) {
                 if (loginResponse.getCode() == 200) {
-                    showAlert("登录成功");
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
-                    finish(); // 关闭当前登录页面
+                    finish();
                 } else {
                     showAlert(loginResponse.getMsg());
                 }
@@ -172,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("确定", null);
         AlertDialog dialog = builder.create();
         dialog.show();
+        dialog.dismiss();
     }
 }
 
