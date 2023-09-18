@@ -74,7 +74,7 @@ public class UserRegistration extends AppCompatActivity {
                         .post(RequestBody.create(JSON, requestBody))
                         .build();
                 Response response = client.newCall(request).execute();
-
+                Log.v("response",response.toString());
                 if (response.isSuccessful()) {
                     return response.body().string();
 
@@ -120,5 +120,6 @@ public class UserRegistration extends AppCompatActivity {
                 .setPositiveButton("确定", null);
         AlertDialog dialog = builder.create();
         dialog.show();
+
     }
 }
