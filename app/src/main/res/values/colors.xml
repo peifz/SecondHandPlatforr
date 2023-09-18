@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorAccent">#FF5722</color>
-        <!-- 其他主题属性 -->
+    <color name="colorAccent">#FFF722</color>
+    <!-- 查看时的颜色 -->
+    <color name="category_text_color">#B0E0E6</color> <!-- 默认颜色 -->
+    <color name="selected_category_text_color">#FF5722</color>
+    <color name="grey">#BBB3B3</color> <!-- 查看时的颜色 -->
+    <color name="product_image_color">#FF5733</color>
+    <!-- 其他主题属性 -->
 </resources>

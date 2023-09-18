@@ -13,13 +13,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class HomeActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-
         // 设置默认显示的Fragment
         loadFragment(new ProductFragment());
 
@@ -30,13 +28,15 @@ public class HomeActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 if(item.getItemId() == R.id.navigation_products){
                         fragment = new ProductFragment();
+                }else if(item.getItemId() == R.id.navigation_profile){
+                      fragment = new MyFragment();
                 }
-
                 return loadFragment(fragment);
             }
         });
     }
 
+    //
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();

@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
-
+    public static String  Username;
+    public  static  int UserId;
     private Button registraButton;
     private ImageView passwordVisibilityImageView;
 
@@ -101,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
                 String requestBody = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
-
-
+                Username = username;
                 // 创建请求对象
                 Request request = new Request.Builder()
                         .url("http://47.107.52.7:88/member/tran/user/login")
@@ -140,10 +140,9 @@ public class MainActivity extends AppCompatActivity {
         try {
             Gson gson = new Gson();
             Log.d("beforeGson",response.toString());
-
+            UserId = Integer.parseInt(response.toString().substring(39,41));
+            Log.d("id", String.valueOf(UserId));
             LoginResponse loginResponse = gson.fromJson(response, LoginResponse.class);
-            Log.d("Response", loginResponse.getData().toString());
-
             if (loginResponse != null) {
                 if (loginResponse.getCode() == 200) {
                     showAlert("登录成功");
