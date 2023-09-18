@@ -3,6 +3,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,7 +75,7 @@ public class UserRegistration extends AppCompatActivity {
                         .build();
 
                 Response response = client.newCall(request).execute();
-
+                Log.v("response",response.toString());
                 if (response.isSuccessful()) {
                     return response.body().string();
                 } else {
@@ -119,5 +120,6 @@ public class UserRegistration extends AppCompatActivity {
                 .setPositiveButton("确定", null);
         AlertDialog dialog = builder.create();
         dialog.show();
+
     }
 }

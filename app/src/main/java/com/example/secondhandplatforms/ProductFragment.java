@@ -170,13 +170,11 @@ public class ProductFragment extends Fragment {
                     Product product = new Product(productObject);
                     products.add(product);
                 }
-
                 // 更新 RecyclerView 数据
                 productList.addAll(products);
                 productAdapter.notifyDataSetChanged();
             } else {
                 String msg = jsonResponse.getString("msg");
-                showAlert(msg);
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                         .addHeader("appSecret", "3636148e54bbef9044a5a8647598c1ee004a4")
                         .post(RequestBody.create(JSON, requestBody))
                         .build();
-
                 // 发送请求并获取响应
                 Response response = client.newCall(request).execute();
 
@@ -133,16 +132,14 @@ public class MainActivity extends AppCompatActivity {
             handleLoginResponse(result);
         }
     }
-
-
     //处理返回的结果
     private void handleLoginResponse(String response) {
         try {
             Gson gson = new Gson();
             Log.d("beforeGson",response.toString());
-            UserId = Integer.parseInt(response.toString().substring(39,41));
             Log.d("id", String.valueOf(UserId));
             LoginResponse loginResponse = gson.fromJson(response, LoginResponse.class);
+            UserId  = Integer.parseInt(loginResponse.getData().getId());
             if (loginResponse != null) {
                 if (loginResponse.getCode() == 200) {
                     showAlert("登录成功");
@@ -172,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("确定", null);
         AlertDialog dialog = builder.create();
         dialog.show();
+        dialog.dismiss();
     }
 }
 
