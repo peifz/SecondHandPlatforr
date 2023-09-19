@@ -87,8 +87,11 @@
 
         </LinearLayout>
 
+
+
         <!-- 导航选项 3 -->
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:orientation="horizontal"
@@ -110,6 +113,31 @@
 
         </LinearLayout>
 
+
+
+
+
+        <LinearLayout
+            android:id="@+id/rechargeOption"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#CCCCCC">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="充值" />
+
+            <!-- 导航箭头，位于整个导航选项的最右侧 -->
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/jiantou"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

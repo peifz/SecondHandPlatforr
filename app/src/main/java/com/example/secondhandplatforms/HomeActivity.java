@@ -26,12 +26,19 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 Fragment fragment = null;
+                //卖闲置
                 if(item.getItemId() == R.id.navigation_products){
-                        fragment = new ProductFragment();
+                        fragment = new MySecondHandFragment();
+                        //我的
                 }else if(item.getItemId() == R.id.navigation_profile){
                       fragment = new MyFragment();
+                      //消息
+                }else if(item.getItemId() == R.id.navigation_message){
+                    fragment = new MessageFragment();
+                }else if(item.getItemId() == R.id.navigation_home){
+                    fragment  = new ProductFragment();
                 }else{
-                    fragment = new ProductFragment();
+                    fragment = new OrderFragment();
                 }
                 return loadFragment(fragment);
             }

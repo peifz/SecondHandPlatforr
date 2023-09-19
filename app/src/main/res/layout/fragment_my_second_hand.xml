@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MySecondHandFragment">
+
+    <!-- Toolbar for navigation options -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true">
+
+        <!-- Customize the toolbar with navigation options -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <!-- Navigation Option: Published -->
+            <TextView
+                android:id="@+id/textPublished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已发布"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="16dp"/>
+
+            <!-- Navigation Option: Saved -->
+
+            <TextView
+                android:id="@+id/textSaved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已保存"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="16dp"/>
+
+            <!-- Navigation Option: New -->
+            <TextView
+                android:id="@+id/textNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新增"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="16dp"/>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- FrameLayout container for rendering the selected Fragment -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
+</RelativeLayout>

@@ -19,9 +19,6 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".UserRegistration"
             android:exported="false" />
         <activity
