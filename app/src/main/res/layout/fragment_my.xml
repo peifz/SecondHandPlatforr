@@ -41,27 +41,6 @@
         android:orientation="vertical">
 
         <!-- 导航选项 1 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="#CCCCCC">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="我的消息" />
-
-            <!-- 导航箭头，位于整个导航选项的最右侧 -->
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/jiantou"
-                android:layout_gravity="center_vertical" />
-
-        </LinearLayout>
 
         <!-- 导航选项 2 (修改头像) -->
         <LinearLayout
