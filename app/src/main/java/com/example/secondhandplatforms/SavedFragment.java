@@ -154,17 +154,23 @@ public class SavedFragment extends Fragment {
 
     private void sendPublishRequest(MyDataItem dataItem) {
         OkHttpClient client = new OkHttpClient();
-        // 创建发布请求并添加请求参数，例如使用 POST 请求
+
+        // 创建请求体，包含需要的参数
         RequestBody requestBody = new FormBody.Builder()
+                .add("id", dataItem.getId())
+                .add("userId", dataItem.getUserid())
                 .build();
+
+        // 创建请求并添加请求头
         Request request = new Request.Builder()
-                .url("http://47.107.52.7:88/member/tran/goods/change?id="+dataItem.getId()+"&content="+dataItem.getContent()
-                +"&addr="+dataItem.getAddr()+"&imageCode="+dataItem.getImageCode()+"&price="+dataItem.getPrice()+"&" +
-                        "typeId="+dataItem.getTypeid()+"&typeName="+dataItem.getTypeName()+"&userId="+dataItem.getUserid())
+                .url("http://47.107.52.7:88/member/tran/goods/change")
+                .addHeader("Accept", "application/json, text/plain, */*")
+                .addHeader("Content-Type", "application/x-www-form-urlencoded") // 注意：使用表单格式
                 .addHeader("appId", APP_ID)
                 .addHeader("appSecret", APP_SECRET)
                 .post(requestBody)
                 .build();
+
         // 异步执行发布请求
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -189,6 +195,7 @@ public class SavedFragment extends Fragment {
             }
         });
     }
+
 
     // 处理发布响应
     private void handlePublishResponse(String responseData) {
