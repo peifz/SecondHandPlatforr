@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
                 //卖闲置
                 if(item.getItemId() == R.id.navigation_products){
                         fragment = new MySecondHandFragment();
+                    Log.d("my", String.valueOf(MainActivity.UserId));
                         //我的
                 }else if(item.getItemId() == R.id.navigation_profile){
                       fragment = new MyFragment();

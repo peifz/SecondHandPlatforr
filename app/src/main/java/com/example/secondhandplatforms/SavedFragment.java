@@ -13,17 +13,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -152,26 +157,32 @@ public class SavedFragment extends Fragment {
         }
     }
 
+
+
     private void sendPublishRequest(MyDataItem dataItem) {
         OkHttpClient client = new OkHttpClient();
 
         // 创建请求体，包含需要的参数
-        RequestBody requestBody = new FormBody.Builder()
-                .add("id", dataItem.getId())
-                .add("userId", dataItem.getUserid())
-                .build();
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("id",dataItem.getId());
+        bodyMap.put("userId", String.valueOf(MainActivity.UserId));
+        String body = new Gson().toJson(bodyMap);
 
+
+        //明显错误
+      /*  RequestBody requestBody = new FormBody.Builder()
+                .add("id",dataItem.getId())
+                .add("userId", String.valueOf(MainActivity.UserId))
+                .build();*/
         // 创建请求并添加请求头
+        Log.d("id", dataItem.getId());
         Request request = new Request.Builder()
                 .url("http://47.107.52.7:88/member/tran/goods/change")
-                .addHeader("Accept", "application/json, text/plain, */*")
-                .addHeader("Content-Type", "application/x-www-form-urlencoded") // 注意：使用表单格式
-                .addHeader("appId", APP_ID)
-                .addHeader("appSecret", APP_SECRET)
-                .post(requestBody)
+                .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body))
+                .addHeader("appId", "8d7539b50797443788485b81f0660ce1")
+                .addHeader("appSecret", "3636148e54bbef9044a5a8647598c1ee004a4")
                 .build();
-
-        // 异步执行发布请求
+        // 异步执行发布请求;
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -180,7 +191,6 @@ public class SavedFragment extends Fragment {
                 // 在此处理失败情况，例如显示错误消息
                 displayErrorMessage("发布请求失败");
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
@@ -195,6 +205,8 @@ public class SavedFragment extends Fragment {
             }
         });
     }
+
+
 
 
     // 处理发布响应

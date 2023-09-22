@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import org.json.JSONException;
@@ -23,62 +24,52 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MyFragment extends Fragment {
-    // 存储新头像URL的变量
     public static String NewURL = MainActivity.AvatarUrl;
 
-    // 构造函数
     public MyFragment() {
-        // 必要的空构造函数
+        // 空的构造函数
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // 创建视图并绑定到 fragment_my.xml 布局
         View view = inflater.inflate(R.layout.fragment_my, container, false);
 
-        // 获取文本框
         final EditText editText = view.findViewById(R.id.usernameEditText);
 
-        // 如果 MainActivity.Username 不为空，则设置文本框的内容为用户名
         if (MainActivity.Username != null) {
             editText.setText(MainActivity.Username);
         }
 
-        // 弹出充值对话框
+        // 请求总收入和总支出
+        new TotalMoneyTask().execute(String.valueOf(MainActivity.UserId));
+
         View rechargeOption = view.findViewById(R.id.rechargeOption);
         rechargeOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 点击时弹出充值对话框
                 showRechargeDialog();
             }
         });
 
-        // 设置 "修改头像" 选项的点击事件监听器
         View modifyAvatar = view.findViewById(R.id.modifyAvatar);
         modifyAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 点击时弹出头像修改对话框
                 showAvatarDialog(editText);
             }
         });
 
-        // 显示用户头像
         ImageView avatarImageView = view.findViewById(R.id.avatarImageView);
         if (NewURL != null) {
-            // 如果 NewURL 不为空，加载新头像
             Glide.with(this).load(NewURL).into(avatarImageView);
         } else {
-            // 若为空则加载默认头像
             Glide.with(this).load(R.drawable.baseline_person_24).into(avatarImageView);
         }
 
         return view;
     }
 
-    // 弹出对话框以获取头像URL并保存在变量中
     private void showAvatarDialog(final EditText editText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("修改头像");
@@ -118,7 +109,7 @@ public class MyFragment extends Fragment {
         builder.setTitle("充值");
         builder.setMessage("请输入充值金额:");
         final EditText input = new EditText(getActivity());
-        input.setInputType(InputType.TYPE_CLASS_NUMBER); // Allow only numeric input
+        input.setInputType(InputType.TYPE_CLASS_NUMBER); // 只允许输入数字
         builder.setView(input);
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
@@ -139,7 +130,6 @@ public class MyFragment extends Fragment {
         builder.show();
     }
 
-    // 异步任务用于执行充值的网络请求
     private class RechargeTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -160,7 +150,6 @@ public class MyFragment extends Fragment {
                         .addHeader("appSecret", "3636148e54bbef9044a5a8647598c1ee004a4")
                         .build();
                 // 发送请求
-                Log.d("sb", requestBody.toString());
                 Response response = client.newCall(request).execute();
                 // 处理响应
                 if (response.isSuccessful()) {
@@ -176,7 +165,7 @@ public class MyFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d( "result", result);
+            Log.d("result", result);
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -195,11 +184,9 @@ public class MyFragment extends Fragment {
         }
     }
 
-    // 异步任务用于执行头像更新的网络请求
     private class AvatarUpdateTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-
             if (params.length != 2) {
                 return null;
             }
@@ -209,7 +196,6 @@ public class MyFragment extends Fragment {
             try {
                 // 构建请求体
                 JSONObject requestBody = new JSONObject();
-
                 requestBody.put("avatar", avatarUrl);
                 requestBody.put("userId", userId);
 
@@ -236,7 +222,6 @@ public class MyFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
@@ -255,7 +240,11 @@ public class MyFragment extends Fragment {
         }
     }
 
-    // 显示头像更新成功的提示
+
+
+
+
+
     private void showSuccessDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("提示");
@@ -269,7 +258,9 @@ public class MyFragment extends Fragment {
         builder.show();
     }
 
-    // 显示头像更新失败的提示
+
+
+
     private void showFailureDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("提示");
@@ -280,7 +271,65 @@ public class MyFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-
         builder.show();
     }
+
+    private class TotalMoneyTask extends AsyncTask<String, Void, JSONObject> {
+        @Override
+        protected JSONObject doInBackground(String... params) {
+            if (params.length != 1) {
+                return null;
+            }
+            String userId = params[0];
+            OkHttpClient client = new OkHttpClient();
+            try {
+                Request request = new Request.Builder()
+                        .url("http://47.107.52.7:88/member/tran/trading/allMoney?userId=" + userId)
+                        .get()
+                        .addHeader("appId", "8d7539b50797443788485b81f0660ce1")
+                        .addHeader("appSecret", "3636148e54bbef9044a5a8647598c1ee004a4")
+                        .build();
+                Response response = client.newCall(request).execute();
+                if (response.isSuccessful()) {
+                    String jsonData = response.body().string();
+                    return new JSONObject(jsonData);
+                } else {
+                    return null;
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject result) {
+            if (result != null) {
+                try {
+                    int code = result.getInt("code");
+                    if (code == 200) {
+                        JSONObject data = result.getJSONObject("data");
+                        int totalRevenue = data.getInt("TotalRevenue");
+                        int totalSpending = data.getInt("TotalSpending");
+                        renderTotalMoney(totalRevenue, totalSpending);
+                    } else {
+                        showFailureDialog(result.getString("msg"));
+                    }
+                } catch (JSONException e) {
+
+                }
+            } else {
+                showFailureDialog("网络请求失败");
+            }
+        }
+    }
+
+    private void renderTotalMoney(int totalRevenue, int totalSpending) {
+        TextView totalRevenueTextView = getView().findViewById(R.id.incomeTextView);
+        TextView totalSpendingTextView = getView().findViewById(R.id.expenseTextView);
+
+        totalRevenueTextView.setText("" + totalRevenue);
+        totalSpendingTextView.setText("" + totalSpending);
+    }
 }
+

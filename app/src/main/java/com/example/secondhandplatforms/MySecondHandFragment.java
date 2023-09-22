@@ -1,4 +1,5 @@
 package com.example.secondhandplatforms;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,11 +13,12 @@ public class MySecondHandFragment extends Fragment {
     private TextView textPublished;
     private TextView textSaved;
     private TextView textNew;
-
+    private TextView textSale;
     public MySecondHandFragment() {
         // Required empty public constructor
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -24,6 +26,7 @@ public class MySecondHandFragment extends Fragment {
         textPublished = view.findViewById(R.id.textPublished);
         textSaved = view.findViewById(R.id.textSaved);
         textNew = view.findViewById(R.id.textNew);
+        textSale  = view.findViewById(R.id.textSold);
         loadFragment(new PublishFragment());
         textPublished.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +51,12 @@ public class MySecondHandFragment extends Fragment {
                 loadFragment(new NewAddFragment());
             }
         });
-
+        textSale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadFragment(new SaleFragment());
+            }
+        });
         return view;
     }
 

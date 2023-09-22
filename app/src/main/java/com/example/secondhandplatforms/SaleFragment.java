@@ -21,17 +21,17 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class PublishFragment extends Fragment {
+public class SaleFragment extends Fragment {
 
     private static final String API_ENDPOINT = "http://47.107.52.7:88/member/tran/goods/myself";
     private static final String APP_ID = "8d7539b50797443788485b81f0660ce1";
     private static final String APP_SECRET = "3636148e54bbef9044a5a8647598c1ee004a4";
 
     private RecyclerView recyclerView;
-    private MyAdapter02 adapter;
+    private soldAdapter adapter;
     private List<MyDataItem> dataItemList;
 
-    public PublishFragment() {
+    public SaleFragment() {
         // Required empty public constructor
     }
 
@@ -44,7 +44,7 @@ public class PublishFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         dataItemList = new ArrayList<>();
-        adapter = new MyAdapter02(dataItemList);
+        adapter = new soldAdapter(dataItemList);
         recyclerView.setAdapter(adapter);
 
         // 发送网络请求获取数据
@@ -56,13 +56,12 @@ public class PublishFragment extends Fragment {
     private void fetchData() {
         OkHttpClient client = new OkHttpClient();
 
-        // 创建请求并添加请求头
+        // 创建请求并添加请求头,发送请求
         Request request = new Request.Builder()
-                .url(API_ENDPOINT + "?current=1&userId=" + MainActivity.UserId)
+                .url(API_ENDPOINT + "?userId=" + MainActivity.UserId)
                 .addHeader("appId", APP_ID)
                 .addHeader("appSecret", APP_SECRET)
                 .build();
-        Log.d("id", String.valueOf(MainActivity.UserId));
         // 异步执行请求
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -92,19 +91,22 @@ public class PublishFragment extends Fragment {
         try {
             JSONObject jsonObject = new JSONObject(responseData);
             int code = jsonObject.getInt("code");
+            Log.d("result", responseData);
             if (code == 200) {
+
                 JSONArray records = jsonObject.getJSONObject("data").getJSONArray("records");
-                Log.d("sb", records.toString());
                 for (int i = 0; i < records.length(); i++) {
                     JSONObject record = records.getJSONObject(i);
+                    Log.d("result",record.toString());
                     String id = record.getString("id");
-                    String content = record.getString("content");
-                    String price = record.getString("price");
+                    Log.d("ders", "handleResponseData: ");
+                    String goodsDescription = record.getString("content");
                     String addr = record.getString("addr");
-
-
-
-                    MyDataItem dataItem = new MyDataItem(id, content, price, addr);
+                    String price = record.getString("price");
+                    String buyerName = record.getString("username");
+                    String createTime = record.getString("createTime");
+                    Log.d("ders", "handleResponseData: ");
+                    MyDataItem dataItem = new MyDataItem(id, goodsDescription,addr, price, buyerName,createTime);
                     dataItemList.add(dataItem);
                 }
 

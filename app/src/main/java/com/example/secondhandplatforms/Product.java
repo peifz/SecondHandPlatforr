@@ -26,6 +26,9 @@ public class Product {
 
     // 添加构造函数和 getter/setter 方法
 
+    public Product(){
+
+    }
     public Product(JSONObject jsonObject) {
         try {
             this.id = jsonObject.getString("id");
@@ -167,6 +170,8 @@ public class Product {
     }
 
     public int getAppIsShare() {
+
+
         return appIsShare;
     }
 

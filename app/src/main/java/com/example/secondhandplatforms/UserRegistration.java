@@ -23,6 +23,7 @@ public class UserRegistration extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button registerButton;
+    private Button backToLoginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +32,8 @@ public class UserRegistration extends AppCompatActivity {
         usernameEditText = findViewById(R.id.usernameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         registerButton = findViewById(R.id.registerButton);
-
-
-        TextView backToLoginTextView = findViewById(R.id.backToLoginTextView);
-        backToLoginTextView.setOnClickListener(new View.OnClickListener() {
+        backToLoginButton = findViewById(R.id.backToLogin);
+        backToLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 在点击时返回到MainActivity

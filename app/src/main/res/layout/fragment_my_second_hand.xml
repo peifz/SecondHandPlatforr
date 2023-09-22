@@ -62,6 +62,17 @@
                 android:focusable="true"
                 android:background="?android:attr/selectableItemBackground"
                 android:padding="16dp"/>
+            <TextView
+                android:id="@+id/textSold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已卖出"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="16dp"/>
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 

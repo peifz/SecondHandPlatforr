@@ -34,6 +34,50 @@
         android:background="@null"
         android:text="@{MainActivity.Username}" />
 
+    <!-- 收入与支出 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- TextView for 总收入 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总收入: "
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/incomeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxx"
+            android:textColor="@android:color/black" />
+
+        <!-- Empty TextView for spacing -->
+        <TextView
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/transparent" />
+
+        <!-- TextView for 总支出 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总支出: "
+            android:textColor="@android:color/black" />
+
+        <!-- TextView for 支出金额 (You can set the actual value from your API here) -->
+        <TextView
+            android:id="@+id/expenseTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxx"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
     <!-- 下部分 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,27 +85,7 @@
         android:orientation="vertical">
 
         <!-- 导航选项 1 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="#CCCCCC">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="我的消息" />
-
-            <!-- 导航箭头，位于整个导航选项的最右侧 -->
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/jiantou"
-                android:layout_gravity="center_vertical" />
-
-        </LinearLayout>
 
         <!-- 导航选项 2 (修改头像) -->
         <LinearLayout

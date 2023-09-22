@@ -1,24 +1,23 @@
-package com.example.secondhandplatforms;
 
+
+package com.example.secondhandplatforms;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.squareup.picasso.Picasso;
 
-import java.time.Instant;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
 
     private List<Product> productList;
 
@@ -33,6 +32,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return new ViewHolder(view);
     }
 
+    @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = productList.get(position);
 
@@ -51,26 +51,32 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             // 处理没有图像URL的情况
             holder.productImageView.setImageResource(R.drawable.ic_launcher_background);
         }
+
+        // 添加点击事件处理器
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 创建一个 Intent 用于启动 ProductInformation Activity
+                Context context = v.getContext();
+                Intent intent = new Intent(context, ProductInformation.class);
+                // 将选定的产品数据添加到 Intent 中
+                intent.putExtra("productId", product.getId());
+                // 启动 Activity
+                context.startActivity(intent);
+            }
+        });
     }
-
-
-
-
 
     @Override
     public int getItemCount() {
         return productList.size();
     }
 
-
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView productImageView;
         TextView productNameTextView;
         TextView productDescriptionTextView;
         TextView userInfoTextView;
-
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -1,42 +1,25 @@
+
+
 package com.example.secondhandplatforms;
-
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OrderFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class OrderFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public OrderFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment OrderFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static OrderFragment newInstance(String param1, String param2) {
         OrderFragment fragment = new OrderFragment();
         Bundle args = new Bundle();
@@ -58,7 +41,33 @@ public class OrderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_order, container, false);
+
+        loadFragment(new TransactionsFragment());
+        // 根据用户点击切换片段
+        view.findViewById(R.id.textPublished).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 用户点击“交易记录”时加载 TransactionsFragment
+                loadFragment(new TransactionsFragment());
+            }
+        });
+
+        view.findViewById(R.id.textSaved).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 用户点击“我的购买”时加载 MypurchasesFragment
+                loadFragment(new MypurchasesFragment());
+            }
+        });
+
+        return view;
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
